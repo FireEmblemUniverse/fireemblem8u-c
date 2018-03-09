@@ -75,7 +75,7 @@ char *GetStringFromIndex(int index)
 {
     if (index == gUnknown_0202B6AC)
         return gUnknown_0202A6AC.buffer0202A6AC;
-    CallARM_DecompText(gUnknown_0815D48C[index], gUnknown_0202A6AC.buffer0202A6AC);
+    CallARM_DecompText(gMsgStringTable[index], gUnknown_0202A6AC.buffer0202A6AC);
     SomethingRelatedToText(gUnknown_0202A6AC.buffer0202A6AC);
     gUnknown_0202B6AC = index;
     return gUnknown_0202A6AC.buffer0202A6AC;
@@ -83,7 +83,7 @@ char *GetStringFromIndex(int index)
 
 char *GetStringFromIndexInBuffer(int index, char *buffer)
 {
-    CallARM_DecompText(gUnknown_0815D48C[index], buffer);
+    CallARM_DecompText(gMsgStringTable[index], buffer);
     SomethingRelatedToText(buffer);
     return buffer;
 }

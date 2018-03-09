@@ -61,3 +61,7 @@ src/*.s
 *.dump
 tools/agbcc
 *.exe
+
+# Generated source files
+src/msg_data.c
+include/msg_data.h
