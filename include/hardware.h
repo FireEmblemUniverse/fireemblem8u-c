@@ -23,6 +23,32 @@ enum
 #define ApplyPalettes(aSrc, aPalId, aPalCount) CopyToPaletteBuffer((aSrc), 0x20 * (aPalId), 0x20 * (aPalCount))
 #define ApplyPalette(aSrc, aPalId) ApplyPalettes((aSrc), (aPalId), 1)
 
+#define SetWinEnable(aWin0, aWin1, aWObj) \
+    gLCDControlBuffer.dispcnt.win0_on = (aWin0); \
+    gLCDControlBuffer.dispcnt.win1_on = (aWin1); \
+    gLCDControlBuffer.dispcnt.objWin_on = (aWObj)
+
+#define SetWin0Layers(aBg0, aBg1, aBg2, aBg3, aObj) \
+    gLCDControlBuffer.wincnt.win0_enableBg0 = (aBg0); \
+    gLCDControlBuffer.wincnt.win0_enableBg1 = (aBg1); \
+    gLCDControlBuffer.wincnt.win0_enableBg2 = (aBg2); \
+    gLCDControlBuffer.wincnt.win0_enableBg3 = (aBg3); \
+    gLCDControlBuffer.wincnt.win0_enableObj = (aObj)
+
+#define SetWin1Layers(aBg0, aBg1, aBg2, aBg3, aObj) \
+    gLCDControlBuffer.wincnt.win1_enableBg0 = (aBg0); \
+    gLCDControlBuffer.wincnt.win1_enableBg1 = (aBg1); \
+    gLCDControlBuffer.wincnt.win1_enableBg2 = (aBg2); \
+    gLCDControlBuffer.wincnt.win1_enableBg3 = (aBg3); \
+    gLCDControlBuffer.wincnt.win1_enableObj = (aObj)
+
+#define SetWOutLayers(aBg0, aBg1, aBg2, aBg3, aObj) \
+    gLCDControlBuffer.wincnt.wout_enableBg0 = (aBg0); \
+    gLCDControlBuffer.wincnt.wout_enableBg1 = (aBg1); \
+    gLCDControlBuffer.wincnt.wout_enableBg2 = (aBg2); \
+    gLCDControlBuffer.wincnt.wout_enableBg3 = (aBg3); \
+    gLCDControlBuffer.wincnt.wout_enableObj = (aObj)
+
 // Functions
 
 void CopyToPaletteBuffer(const void* src, int b, int size);
@@ -60,7 +86,7 @@ void BG_SetPosition(u16 a, u16 b, u16 c);
 // ??? sub_800151C(???);
 // ??? sub_8001530(???);
 // ??? sub_800154C(???);
-// ??? sub_800159C(???);
+void sub_800159C(u16 *a, u16 *b, s16 c, s16 d, u16 e);
 // ??? sub_80016C4(???);
 // ??? sub_8001710(???);
 // ??? sub_800172C(???);
@@ -79,7 +105,7 @@ void SoftResetIfKeyComboPressed();
 // ??? sub_8001CB0(???);
 // ??? ExecBothHBlankHandlers(???);
 // ??? UpdateHBlankHandlerState(???);
-// ??? SetPrimaryHBlankHandler(???);
+void SetPrimaryHBlankHandler(void(*)(void));
 void SetSecondaryHBlankHandler(void(*)(void));
 // ??? GetBackgroundFromBufferPointer(???);
 // ??? BG_SetPriority(???);

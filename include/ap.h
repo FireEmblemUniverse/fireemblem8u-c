@@ -34,12 +34,12 @@ void AP_LoadDefinition(struct APHandle*, const u16*);
 void AP_ExecDummyFrame(struct APHandle*);
 void AP_Init(struct APHandle*, const u16*, u16);
 struct APHandle* AP_Find(const u16* definition);
-// ??? APProc_Create(???);
+struct APProc* APProc_Create(const void* apDefinition, int xPos, int yPos, int tileBase, int anim, u16 aObjNode);
 // ??? APProc_OnUpdate(???);
 // ??? APProc_OnEnd(???);
 // ??? APProc_SetParameters(???);
 // ??? APProc_Delete(???);
-// ??? APProc_DeleteAll(???);
+void APProc_DeleteAll(void);
 // ??? APProc_Exists(???);
 
 #endif // GUARD_AP_H

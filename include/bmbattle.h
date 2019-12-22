@@ -47,8 +47,8 @@ struct BattleUnit {
 
     /* 6E */ s8 expGain;
     /* 6F */ s8 statusOut;
-    /* 70 */ u8 levelPrevious;
-    /* 71 */ u8 expPrevious;
+    /* 70 */ s8 levelPrevious;
+    /* 71 */ s8 expPrevious;
 
     /* 72 */ u8 hpInitial;
 
@@ -212,5 +212,7 @@ void SetScriptedBattle(struct BattleHit* hits);
 void UnitLevelUp(struct Unit* unit);
 void BattleHitAdvance(void);
 void BattleHitTerminate(void);
+
+#define BUNIT_IS_OBSTACLE(aBu) (((aBu)->terrainId == TERRAIN_WALL_1B) || ((aBu)->terrainId == TERRAIN_SNAG))
 
 #endif // GUARD_BMBATTLE_H

@@ -518,7 +518,7 @@ void EquipUnitItemSlot(struct Unit* unit, int itemSlot) {
 
 s8 IsItemEffectiveAgainst(u16 item, struct Unit* unit) {
     if (unit->pClassData) {
-        int classId = unit->pClassData->number;
+        int classId = UNIT_CLASS_ID(unit);
         const u8* effList = GetItemEffectiveness(item);
 
         if (!effList)
@@ -555,8 +555,8 @@ s8 IsItemEffectiveAgainst(u16 item, struct Unit* unit) {
 }
 
 s8 IsUnitEffectiveAgainst(struct Unit* actor, struct Unit* target) {
-    int actorClass = actor->pClassData->number;
-    int targetClass = target->pClassData->number;
+    int actorClass = UNIT_CLASS_ID(actor);
+    int targetClass = UNIT_CLASS_ID(target);
 
     const u8* effList = NULL;
 
@@ -1019,5 +1019,5 @@ void SetItemUnsealedForCharacter(int item, u8 unk) {
 }
 
 s8 IsItemUnsealedForUnit(struct Unit* unit, int item) {
-    return (GetChapterUnk1C(GetItemType(item)) == unit->pCharacterData->number) ? TRUE : FALSE;
+    return (GetChapterUnk1C(GetItemType(item)) == UNIT_CHAR_ID(unit)) ? TRUE : FALSE;
 }

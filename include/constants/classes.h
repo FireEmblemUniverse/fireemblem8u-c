@@ -17,7 +17,7 @@ enum {
     CLASS_GENERAL             = 0x0B,
     CLASS_GENERAL_F           = 0x0C,
     CLASS_THIEF               = 0x0D,
-    CLASS_MANAKETE            = 0x0E, // TODO: which one?
+    CLASS_MYRRH_TRANSFORMED   = 0x0E, // display only?
     CLASS_MERCENARY           = 0x0F,
     CLASS_MERCENARY_F         = 0x10,
     CLASS_HERO                = 0x11,
@@ -63,7 +63,7 @@ enum {
     CLASS_PUPIL_T2            = 0x39,
     CLASS_RECRUIT_T2          = 0x3A,
     CLASS_MANAKETE_2          = 0x3B, // TODO: which one?
-    CLASS_MANAKETE_MYRRH      = 0x3C,
+    CLASS_MYRRH               = 0x3C,
     CLASS_JOURNEYMAN          = 0x3D,
     CLASS_PUPIL               = 0x3E,
     CLASS_FIGHTER             = 0x3F,
@@ -106,12 +106,12 @@ enum {
     CLASS_DEATHGOYLE          = 0x64,
     CLASS_DRACO_ZOMBIE        = 0x65,
     CLASS_DEMON_KING          = 0x66,
-    CLASS_BLST_REGULAR_USED   = 0x67,
-    CLASS_BLST_LONG_USED      = 0x68,
-    CLASS_BLST_KILLER_USED    = 0x69,
-    CLASS_BLST_REGULAR_EMPTY  = 0x6A,
-    CLASS_BLST_LONG_EMPTY     = 0x6B,
-    CLASS_BLST_KILLER_EMPTY   = 0x6C,
+    CLASS_BLST_REGULAR_USED   = 0x67, // display only?
+    CLASS_BLST_LONG_USED      = 0x68, // display only?
+    CLASS_BLST_KILLER_USED    = 0x69, // display only?
+    CLASS_BLST_REGULAR_EMPTY  = 0x6A, // display only?
+    CLASS_BLST_LONG_EMPTY     = 0x6B, // display only?
+    CLASS_BLST_KILLER_EMPTY   = 0x6C, // display only?
     CLASS_CIVILIAN_M1         = 0x6D,
     CLASS_CIVILIAN_F1         = 0x6E,
     CLASS_CIVILIAN_M2         = 0x6F,

@@ -567,8 +567,8 @@ struct Unit* LoadUnit(const struct UnitDefinition* uDef) {
 
         if (CanClassWieldWeaponType(monsterClass, ITYPE_BOW) == TRUE) {
             // TODO: AI BIT DEFINITIONS
-            buf.ai.ai3 = buf.ai.ai3 & (1 | 2 | 4);
-            buf.ai.ai3 = buf.ai.ai3 | (8 | 32);
+            buf.ai[2] = buf.ai[2] & (1 | 2 | 4);
+            buf.ai[2] = buf.ai[2] | (8 | 32);
         }
 
         uDef = &buf;
@@ -609,7 +609,7 @@ struct Unit* LoadUnit(const struct UnitDefinition* uDef) {
             UnitAutolevelRealistic(unit);
             UnitAutolevelWExp(unit, uDef);
         } else {
-            if ((UNIT_CATTRIBUTES(unit) & CA_BOSS) || (unit->pCharacterData->number < 0x40)) {
+            if ((UNIT_CATTRIBUTES(unit) & CA_BOSS) || (UNIT_CHAR_ID(unit) < 0x40)) {
                 struct Unit* unit2 = GetFreeUnit(0);
 
                 CopyUnit(unit, unit2);
@@ -722,7 +722,7 @@ void FixROMUnitStructPtr(struct Unit* unit) {
     // TODO: investigate why
 
     if (UNIT_CATTRIBUTES(unit) & CA_BIT_23)
-        unit->pCharacterData = GetCharacterData(unit->pCharacterData->number - 1);
+        unit->pCharacterData = GetCharacterData(UNIT_CHAR_ID(unit) - 1);
 }
 
 void UnitLoadSupports(struct Unit* unit) {
@@ -800,9 +800,9 @@ void UnitAutolevelPenalty(struct Unit* unit, u8 classId, int levelCount) {
 void UnitApplyBonusLevels(struct Unit* unit, int levelCount) {
     if (levelCount && !UNIT_IS_GORGON_EGG(unit)) {
         if (levelCount > 0)
-            UnitAutolevelCore(unit, unit->pClassData->number, levelCount);
+            UnitAutolevelCore(unit, UNIT_CLASS_ID(unit), levelCount);
         else if (levelCount < 0)
-            UnitAutolevelPenalty(unit, unit->pClassData->number, -levelCount);
+            UnitAutolevelPenalty(unit, UNIT_CLASS_ID(unit), -levelCount);
 
         UnitCheckStatCaps(unit);
 
@@ -814,7 +814,7 @@ void UnitAutolevel(struct Unit* unit) {
     if (UNIT_CATTRIBUTES(unit) & CA_PROMOTED)
         UnitAutolevelCore(unit, unit->pClassData->promotion, GetCurrentPromotedLevelBonus());
 
-    UnitAutolevelCore(unit, unit->pClassData->number, unit->level - 1);
+    UnitAutolevelCore(unit, UNIT_CLASS_ID(unit), unit->level - 1);
 }
 
 void UnitAutolevelRealistic(struct Unit* unit) {
@@ -872,7 +872,7 @@ struct Unit* GetUnitFromCharId(int charId) {
     for (i = 1; i < 0x100; ++i) {
         struct Unit* unit = GetUnit(i);
 
-        if (UNIT_IS_VALID(unit) && unit->pCharacterData->number == charId)
+        if (UNIT_IS_VALID(unit) && UNIT_CHAR_ID(unit) == charId)
             return unit;
     }
 
@@ -885,7 +885,7 @@ struct Unit* GetUnitFromCharIdAndFaction(int charId, int faction) {
     for (i = faction + 1; i < last; ++i) {
         struct Unit* unit = GetUnit(i);
 
-        if (UNIT_IS_VALID(unit) && unit->pCharacterData->number == charId)
+        if (UNIT_IS_VALID(unit) && UNIT_CHAR_ID(unit) == charId)
             return unit;
     }
 
@@ -979,7 +979,7 @@ void UnitChangeFaction(struct Unit* unit, int faction) {
         GetUnit(newUnit->rescueOtherUnit)->rescueOtherUnit = newUnit->index;
 }
 
-inline s8 CanUnitCrossTerrain(struct Unit* unit, int terrain) {
+inline int CanUnitCrossTerrain(struct Unit* unit, int terrain) {
     const s8* lookup = GetUnitMovementCost(unit);
     return (lookup[terrain] > 0) ? TRUE : FALSE;
 }
@@ -1087,7 +1087,7 @@ void MoveActiveUnit(int x, int y) {
 
     gActiveUnit->state |= US_UNSELECTABLE;
 
-    BWL_AddTilesMoved(gActiveUnit->pCharacterData->number, gActionData.moveCount);
+    BWL_AddTilesMoved(UNIT_CHAR_ID(gActiveUnit), gActionData.moveCount);
 
     if (GetUnitCurrentHp(gActiveUnit) != 0)
         gActiveUnit->state = gActiveUnit->state &~ US_HIDDEN;
@@ -1113,7 +1113,7 @@ void ClearActiveFactionGrayedStates(void) {
             if (unit->state & (US_UNAVAILABLE | US_UNSELECTABLE))
                 continue;
 
-            StoreSomeUnitSetFlags(unit->pCharacterData->number);
+            StoreSomeUnitSetFlags(UNIT_CHAR_ID(unit));
         }
     }
 
@@ -1194,7 +1194,7 @@ int GetUnitAid(struct Unit* unit) {
 }
 
 int GetUnitMagBy2Range(struct Unit* unit) {
-    if (unit->pCharacterData->number == CHARACTER_FOMORTIIS) {
+    if (UNIT_CHAR_ID(unit) == CHARACTER_FOMORTIIS) {
         return GetItemMaxRange(ITEM_NIGHTMARE);
     } else {
         int result = GetUnitPower(unit) / 2;

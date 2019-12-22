@@ -37,7 +37,10 @@ enum
     TRAP_EXTDATA_TRAP_DAMAGE    = 3, // trap damage (needs confirmation)
 
     // Light Rune extdata definitions
-    TRAP_EXTDATA_RUNE_TURNSLEFT        = 2, // turns left beofre wearing out
+    TRAP_EXTDATA_RUNE_TURNSLEFT = 2, // turns left beofre wearing out
+
+    // Gorgon Egg extdata definitions
+    TRAP_EXTDATA_EGG_LEVEL = 3, // gorgon level
 };
 
 struct Trap

@@ -626,7 +626,7 @@ extern struct ActionData gActionData;
 // extern ??? gUnknown_0203E1E4
 // extern ??? gUnknown_0203E1E8
 // extern ??? gUnknown_0203E1EC
-extern struct MapAnimState gUnknown_0203E1F0;
+extern struct MapAnimState gMapBattle;
 // extern ??? gUnknown_0203E1F8
 // extern ??? gUnknown_0203E254
 // extern ??? gUnknown_0203E754
@@ -1299,10 +1299,10 @@ extern u16 gUnknown_08589A9C[];
 extern struct Glyph *gUnknown_0858C7EC[];
 extern struct Glyph *gUnknown_0858F6F4[];
 extern struct Glyph *gUnknown_08590B44[];
-extern const u16 gUnknown_08590F44[]; // 8x8 obj data
+extern u16 /*CONST_DATA*/ gUnknown_08590F44[]; // 8x8 obj data
 // extern ??? gUnknown_08590F4C
-extern const u16 gUnknown_08590F54[]; // 32x32 obj data
-extern const u16 gUnknown_08590F64[]; // 8x16 obj data
+extern u16 /*CONST_DATA*/ gUnknown_08590F54[]; // 32x32 obj data
+extern u16 /*CONST_DATA*/ gUnknown_08590F64[]; // 8x16 obj data
 // extern ??? gUnknown_08590F6C
 // extern ??? gUnknown_08590F7C
 extern const u16 gUnknown_08590F8C[]; // ?? obj data
@@ -1424,12 +1424,12 @@ extern const char *gUnknown_08591AA4[][2];
 // extern ??? gUnknown_0859A0F8
 // extern ??? gUnknown_0859A100
 // extern ??? gUnknown_0859A110
-extern const u16 gUnknown_0859A120[];
-extern const u16 gUnknown_0859A140[];
-extern const u16 gUnknown_0859A160[];
-extern const u16 gUnknown_0859A180[];
-extern const u16 gUnknown_0859A1A0[];
-extern const u16 gUnknown_0859A1C0[];
+extern u16 gUnknown_0859A120[];
+extern u16 gUnknown_0859A140[];
+extern u16 gUnknown_0859A160[];
+extern u16 gUnknown_0859A180[];
+extern u16 gUnknown_0859A1A0[];
+extern u16 gUnknown_0859A1C0[];
 // extern ??? gUnknown_0859A1E0
 // extern ??? gProc_BMapMain
 // extern ??? gUnknown_0859A438
@@ -1444,7 +1444,7 @@ extern const struct ProcCmd gUnknown_0859A548[]; // this is GENS/Camera Movement
 // extern ??? gUnitLookup
 // extern ??? gTilesetTerrainLookup
 // extern ??? gBmMapBaseTiles
-// extern ??? gUnknown_0859AA5C
+extern struct ProcCmd gUnknown_0859AA5C[]; // DebugMonitor (dummied proc)
 // extern ??? gUnknown_0859AA64
 // extern ??? gUnknown_0859AA7C
 // extern ??? gUnknown_0859AA84

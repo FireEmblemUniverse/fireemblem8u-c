@@ -91,6 +91,7 @@ enum {
     CHARACTER_LYON_FINAL   = 0x6C,
     CHARACTER_ORSON        = 0x6D,
 
+    CHARACTER_MONSTER_BA   = 0xBA, // TODO: what is it?
     CHARACTER_FOMORTIIS    = 0xBE,
 
     CHARACTER_WALL         = 0xFE,

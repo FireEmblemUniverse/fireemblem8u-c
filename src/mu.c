@@ -148,12 +148,6 @@ extern u8 gMUGfxBuffer[MU_GFX_MAX_SIZE * MU_MAX_COUNT];
 
 static struct MUConfig sMUConfigArray[MU_MAX_COUNT];
 
-// CONST DATA
-
-#ifndef CONST_DATA
-#   define CONST_DATA const __attribute__((section(".data")))
-#endif // CONST_DATA
-
 static CONST_DATA u16* sMUFlashColorLookup[] = {
     gUnknown_0859A140,
     gUnknown_0859A120,
@@ -592,7 +586,7 @@ struct MUProc* MU_CreateExt(struct Unit* pUnit, unsigned classIndex, unsigned pa
 struct MUProc* MU_Create(struct Unit* pUnit) {
     struct MUProc* proc;
 
-    unsigned classIndex = pUnit->pClassData->number;
+    unsigned classIndex = UNIT_CLASS_ID(pUnit);
 
     if (pUnit->state & US_IN_BALLISTA) {
         struct Trap* blst = GetTrap(pUnit->ballistaIndex);
@@ -1205,7 +1199,7 @@ static void MU_AdvanceStepSfx(struct MUProc* proc) {
             pStepSoundDefinition = gMUSfxDef_Boat;
             break;
 
-        case CLASS_MANAKETE_MYRRH:
+        case CLASS_MYRRH:
             pStepSoundDefinition = gMUSfxDef_Myrrh;
             break;
 
@@ -1716,12 +1710,12 @@ void MU_StartDelayedFaceTarget(struct MUProc* proc) {
 static void MU_EndRefaceApAnim(int argAp) {
     struct APHandle* ap = (struct APHandle*) argAp;
 
-    int actor1 = gUnknown_0203E1F0.subjectActorId;
-    int actor2 = 1 - actor1;
+    int actorA = gMapBattle.attackerActorNum;
+    int actorB = 1 - actorA;
 
     SetBattleAnimFacing(
-        actor1, actor2,
-        GetSpellAssocFacing(gUnknown_0203E1F0.actors[0].pBattleUnit->weaponBefore)
+        actorA, actorB,
+        GetSpellAssocFacing(gMapBattle.actor[0].bu->weaponBefore)
     );
 
     ap->frameTimer    = 0;

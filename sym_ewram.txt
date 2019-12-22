@@ -620,7 +620,7 @@
 . = 0x03E1E4; gUnknown_0203E1E4 = .;
 . = 0x03E1E8; gUnknown_0203E1E8 = .;
 . = 0x03E1EC; gUnknown_0203E1EC = .;
-. = 0x03E1F0; gUnknown_0203E1F0 = .;
+. = 0x03E1F0; gMapBattle = .;
 . = 0x03E1F8; gUnknown_0203E1F8 = .;
 . = 0x03E254; gUnknown_0203E254 = .;
 . = 0x03E754; gUnknown_0203E754 = .;

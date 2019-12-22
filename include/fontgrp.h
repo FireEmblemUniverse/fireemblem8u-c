@@ -117,7 +117,7 @@ void Font_LoadForUI(void);
 // ??? Font_SetSomeSpecialDrawingRoutine(???);
 void DrawTextInline(struct TextHandle* text, u16* dest, int colorId, int x, int tileWidth, const char* string);
 void Text_InsertString(struct TextHandle *th, int x, int colorId, const char *str);
-// ??? Text_InsertNumberOr2Dashes(???);
+void Text_InsertNumberOr2Dashes(struct TextHandle *th, int x, int colorId, int n);
 void Text_AppendStringASCII(struct TextHandle *text, const char *str);
 const char *Text_AppendCharASCII(struct TextHandle *text, const char *str);
 char *GetCharTextWidthASCII(char *str, u32 *width);

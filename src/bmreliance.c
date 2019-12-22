@@ -48,7 +48,7 @@ struct Unit* GetUnitSupporterUnit(struct Unit* unit, int num)
         if (!UNIT_IS_VALID(unit))
             continue;
 
-        if (unit->pCharacterData->number == charId)
+        if (UNIT_CHAR_ID(unit) == charId)
             return unit;
     }
 
@@ -106,7 +106,7 @@ void UnitGainSupportLevel(struct Unit* unit, int num)
     unit->supports[num]++;
     gUnknown_0202BCF0.chapterTotalSupportGain++;
 
-    SetSupportLevelGained(unit->pCharacterData->number, GetUnitSupporterCharacter(unit, num));
+    SetSupportLevelGained(UNIT_CHAR_ID(unit), GetUnitSupporterCharacter(unit, num));
 }
 
 s8 CanUnitSupportNow(struct Unit* unit, int num)
@@ -169,7 +169,7 @@ void ClearUnitSupports(struct Unit* unit)
         if (!other)
             continue;
 
-        other->supports[GetUnitSupporterNum(other, unit->pCharacterData->number)] = 0;
+        other->supports[GetUnitSupporterNum(other, UNIT_CHAR_ID(unit))] = 0;
         unit->supports[i] = 0;
     }
 }
@@ -301,7 +301,7 @@ int GetUnitSupportBonuses(struct Unit* unit, struct SupportBonuses* bonuses)
         if (other->state & (US_UNAVAILABLE | US_RESCUED))
             continue;
 
-        level1 = GetUnitSupportLevel(other, GetUnitSupporterNum(other, unit->pCharacterData->number));
+        level1 = GetUnitSupportLevel(other, GetUnitSupporterNum(other, UNIT_CHAR_ID(unit)));
         ApplyAffinitySupportBonuses(bonuses, other->pCharacterData->affinity, level1);
 
         level2 = GetUnitSupportLevel(unit, i);

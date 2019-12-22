@@ -192,12 +192,7 @@ struct UnitDefinition
 
     /* 0C */ u8 items[UNIT_DEFINITION_ITEM_COUNT];
 
-    struct {
-        /* 10 */ u8 ai1;
-        /* 11 */ u8 ai2;
-        /* 12 */ u8 ai3;
-        /* 13 */ u8 ai4;
-    } ai;
+    /* 10 */ u8 ai[4];
 };
 
 enum
@@ -206,7 +201,7 @@ enum
 
     US_NONE         = 0,
 
-    US_HIDDEN       = (1 << 0),
+    US_HIDDEN       = (1 << 0), // Bad name? US_BUSY?
     US_UNSELECTABLE = (1 << 1),
     US_DEAD         = (1 << 2),
     US_NOT_DEPLOYED = (1 << 3),
@@ -424,7 +419,7 @@ struct Unit* GetUnit(int id);
 const struct ClassData* GetClassData(int classId);
 const struct CharacterData* GetCharacterData(int charId);
 void UnitRemoveItem(struct Unit* unit, int slot);
-s8 CanUnitCrossTerrain(struct Unit* unit, int terrain);
+int CanUnitCrossTerrain(struct Unit* unit, int terrain);
 
 #define UNIT_IS_VALID(aUnit) ((aUnit) && (aUnit)->pCharacterData)
 
@@ -433,6 +428,10 @@ s8 CanUnitCrossTerrain(struct Unit* unit, int terrain);
 #define UNIT_CATTRIBUTES(aUnit) ((aUnit)->pCharacterData->attributes | (aUnit)->pClassData->attributes)
 
 #define UNIT_NAME_ID(aUnit) ((aUnit)->pCharacterData->nameTextId)
+#define UNIT_CLASS_NAME_ID(aUnit) ((aUnit->pClassData->nameTextId))
+
+#define UNIT_CLASS_ID(aUnit) ((aUnit)->pClassData->number)
+#define UNIT_CHAR_ID(aUnit) ((aUnit)->pCharacterData->number)
 
 #define UNIT_MHP_MAX(aUnit) (UNIT_FACTION(unit) == FACTION_RED ? 120 : 60)
 #define UNIT_POW_MAX(aUnit) ((aUnit)->pClassData->maxPow)
@@ -450,8 +449,8 @@ s8 CanUnitCrossTerrain(struct Unit* unit, int terrain);
 #define UNIT_CON(aUnit) (UNIT_CON_BASE(aUnit) + (aUnit)->conBonus)
 #define UNIT_MOV(aUnit) ((aUnit)->movBonus + UNIT_MOV_BASE(aUnit))
 
-#define UNIT_IS_GORGON_EGG(aUnit) (((aUnit)->pClassData->number == CLASS_GORGONEGG) || ((aUnit)->pClassData->number == CLASS_GORGONEGG2))
-#define UNIT_IS_PHANTOM(aUnit) ((aUnit)->pClassData->number == CLASS_PHANTOM)
+#define UNIT_IS_GORGON_EGG(aUnit) ((UNIT_CLASS_ID(aUnit) == CLASS_GORGONEGG) || (UNIT_CLASS_ID(aUnit) == CLASS_GORGONEGG2))
+#define UNIT_IS_PHANTOM(aUnit) (UNIT_CLASS_ID(aUnit) == CLASS_PHANTOM)
 
 #define UNIT_ARENA_LEVEL(aUnit) (((aUnit)->state >> 17) & 0x7)
 

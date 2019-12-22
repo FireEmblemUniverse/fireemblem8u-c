@@ -919,7 +919,7 @@ s8 BattleCheckTriangleAttack(struct BattleUnit* attacker, struct BattleUnit* def
         if (unit->statusIndex == UNIT_STATUS_13)
             continue;
 
-        if (unit->pClassData->number == CLASS_WYVERN_KNIGHT_F)
+        if (UNIT_CLASS_ID(unit) == CLASS_WYVERN_KNIGHT_F)
             continue;
 
         if (UNIT_CATTRIBUTES(unit) & triangleAttackAttr) {
@@ -953,7 +953,7 @@ void BattleCheckSureShot(struct BattleUnit* attacker) {
     if (gBattleHitIterator->attributes & BATTLE_HIT_ATTR_GREATSHLD)
         return;
 
-    switch (attacker->unit.pClassData->number) {
+    switch (UNIT_CLASS_ID(&attacker->unit)) {
 
     case CLASS_SNIPER:
     case CLASS_SNIPER_F:
@@ -974,7 +974,7 @@ void BattleCheckSureShot(struct BattleUnit* attacker) {
 
         break;
 
-    } // switch (attacker->unit.pClassData->number)
+    } // switch (UNIT_CLASS_ID(&attacker->unit))
 }
 
 void BattleCheckPierce(struct BattleUnit* attacker, struct BattleUnit* defender) {
@@ -987,7 +987,7 @@ void BattleCheckPierce(struct BattleUnit* attacker, struct BattleUnit* defender)
     if (gBattleHitIterator->attributes & BATTLE_HIT_ATTR_GREATSHLD)
         return;
 
-    switch (attacker->unit.pClassData->number) {
+    switch (UNIT_CLASS_ID(&attacker->unit)) {
 
     case CLASS_WYVERN_KNIGHT:
     case CLASS_WYVERN_KNIGHT_F:
@@ -996,7 +996,7 @@ void BattleCheckPierce(struct BattleUnit* attacker, struct BattleUnit* defender)
 
         break;
 
-    } // switch (attacker->unit.pClassData->number)
+    } // switch (UNIT_CLASS_ID(&attacker->unit))
 }
 
 void BattleCheckGreatShield(struct BattleUnit* attacker, struct BattleUnit* defender) {
@@ -1018,7 +1018,7 @@ void BattleCheckGreatShield(struct BattleUnit* attacker, struct BattleUnit* defe
     if (gBattleHitIterator->attributes & BATTLE_HIT_ATTR_MISS)
         return;
 
-    switch (defender->unit.pClassData->number) {
+    switch (UNIT_CLASS_ID(&defender->unit)) {
 
     case CLASS_GENERAL:
     case CLASS_GENERAL_F:
@@ -1027,11 +1027,11 @@ void BattleCheckGreatShield(struct BattleUnit* attacker, struct BattleUnit* defe
 
         break;
 
-    } // switch (defender->unit.pClassData->number)
+    } // switch (UNIT_CLASS_ID(&defender->unit))
 }
 
 s8 BattleCheckSilencer(struct BattleUnit* attacker, struct BattleUnit* defender) {
-    switch (defender->unit.pClassData->number) {
+    switch (UNIT_CLASS_ID(&defender->unit)) {
 
     case CLASS_DEMON_KING:
         return FALSE;
@@ -1043,7 +1043,7 @@ s8 BattleCheckSilencer(struct BattleUnit* attacker, struct BattleUnit* defender)
         if (gUnknown_0202BCF0.chapterIndex == 0x22) // TODO: CHAPTER ID CONSTANTS
             return FALSE;
 
-    } // switch (defender->unit.pClassData->number)
+    } // switch (UNIT_CLASS_ID(&defender->unit))
 
     if (BattleRoll1RN(gBattleStats.silencerRate, FALSE) == TRUE)
         return TRUE;
@@ -1140,7 +1140,7 @@ void BattleGenerateHitEffects(struct BattleUnit* attacker, struct BattleUnit* de
     attacker->wexpMultiplier++;
 
     if (!(gBattleHitIterator->attributes & BATTLE_HIT_ATTR_MISS)) {
-        if (defender->unit.pClassData->number != CLASS_DEMON_KING) {
+        if (UNIT_CLASS_ID(&defender->unit) != CLASS_DEMON_KING) {
             switch (GetItemWeaponEffect(attacker->weapon)) {
 
             case WPN_EFFECT_POISON:
@@ -1188,7 +1188,7 @@ void BattleGenerateHitEffects(struct BattleUnit* attacker, struct BattleUnit* de
             gBattleHitIterator->attributes |= BATTLE_HIT_ATTR_HPSTEAL;
         }
 
-        if (defender->unit.pClassData->number != CLASS_DEMON_KING) {
+        if (UNIT_CLASS_ID(&defender->unit) != CLASS_DEMON_KING) {
             if (GetItemWeaponEffect(attacker->weapon) == WPN_EFFECT_PETRIFY) {
                 switch (gUnknown_0202BCF0.chapterPhaseIndex) {
 
@@ -1401,7 +1401,7 @@ void CheckBattleUnitLevelUp(struct BattleUnit* bu) {
 void ApplyUnitDefaultPromotion(struct Unit* unit) {
     const struct ClassData* promotedClass = GetClassData(unit->pClassData->promotion);
 
-    int baseClassId = unit->pClassData->number;
+    int baseClassId = UNIT_CLASS_ID(unit);
     int promClassId = promotedClass->number;
 
     int i;
@@ -1473,7 +1473,7 @@ void ApplyUnitDefaultPromotion(struct Unit* unit) {
 void ApplyUnitPromotion(struct Unit* unit, u8 classId) {
     const struct ClassData* promotedClass = GetClassData(classId);
 
-    int baseClassId = unit->pClassData->number;
+    int baseClassId = UNIT_CLASS_ID(unit);
     int promClassId = promotedClass->number;
 
     int i;
@@ -1708,7 +1708,7 @@ void UpdateUnitFromBattle(struct Unit* unit, struct BattleUnit* bu) {
     UnitRemoveInvalidItems(unit);
 
     if (bu->expGain)
-        BWL_AddExpGained(unit->pCharacterData->number, bu->expGain);
+        BWL_AddExpGained(UNIT_CHAR_ID(unit), bu->expGain);
 }
 
 void UpdateUnitDuringBattle(struct Unit* unit, struct BattleUnit* bu) {
@@ -1776,7 +1776,7 @@ int GetUnitClassKillExpBonus(struct Unit* actor, struct Unit* target) {
     if (UNIT_CATTRIBUTES(target) & CA_BOSS)
         result += 40;
 
-    if (target->pClassData->number == CLASS_ENTOUMBED)
+    if (UNIT_CLASS_ID(target) == CLASS_ENTOUMBED)
         result += 40;
 
     return result;
@@ -1837,11 +1837,11 @@ void ModifyUnitSpecialExp(struct Unit* actor, struct Unit* target, int* exp) {
             *exp = 0;
     }
 
-    if (target->pClassData->number == CLASS_DEMON_KING)
+    if (UNIT_CLASS_ID(target) == CLASS_DEMON_KING)
         if (target->curHP == 0)
             *exp = 0;
 
-    if (actor->pClassData->number == CLASS_PHANTOM)
+    if (UNIT_CLASS_ID(actor) == CLASS_PHANTOM)
         *exp = 0;
 }
 
@@ -2236,12 +2236,12 @@ int GetOffensiveStaffAccuracy(struct Unit* actor, struct Unit* target) {
 
     int result;
 
-    if (actor->pClassData->number == CLASS_DEMON_KING)
+    if (UNIT_CLASS_ID(actor) == CLASS_DEMON_KING)
         result = (baseAccuracy + unitSkill) - distance * 2;
     else
         result = (baseAccuracy + 30 + unitSkill) - distance * 2;
 
-    if ((target->pClassData->number == CLASS_DEMON_KING) || (target->pCharacterData->number == CHARACTER_LYON) || (target->pCharacterData->number == CHARACTER_LYON_FINAL))
+    if ((UNIT_CLASS_ID(target) == CLASS_DEMON_KING) || (UNIT_CHAR_ID(target) == CHARACTER_LYON) || (UNIT_CHAR_ID(target) == CHARACTER_LYON_FINAL))
         return 0;
 
     if (result < 0)

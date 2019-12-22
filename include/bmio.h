@@ -1,34 +1,61 @@
 #ifndef GUARD_BMIO_H
 #define GUARD_BMIO_H
 
-enum {
+enum
+{
     BM_BGPAL_6 = 6,
     BM_BGPAL_TILESET_BASE = 7,
+
+    BM_BGPAL_BANIM_IFBACK = 1, /* size: 2 */
+    BM_BGPAL_BANIM_UNK4 = 4,
+    BM_BGPAL_BANIM_UNK5 = 5,
 };
 
-enum {
+enum
+{
+    BM_BGCHR_BANIM_IFBACK = 1,
+    BM_BGCHR_BANIM_UNK160 = 0x160,
+    BM_BGCHR_BANIM_UNK200 = 0x200,
+
+    BM_OBJCHR_BANIM_EFFECT = 384,
+    BM_OBJCHR_BANIM_EFFECT2 = 448,
+};
+
+enum
+{
     BM_OBJPAL_1  = 1,
     BM_OBJPAL_10 = 10,
+
+    BM_OBJPAL_BANIM_EFFECT1 = 3,
+    BM_OBJPAL_BANIM_EFFECT2 = 4,
+
+    BM_OBJPAL_BANIM_SPECIALMU = 8, /* size: 2 */
+
+    BM_OBJPAL_UNIT_GRAYED = 15,
 };
 
-struct TileGfxAnim {
+struct TileGfxAnim
+{
     /* 00 */ u16         time;
     /* 02 */ u16         size;
     /* 04 */ const void* data;
 };
 
-struct TilePalAnim {
+struct TilePalAnim
+{
     /* 00 */ const void* data;
     /* 04 */ u8          time;
     /* 05 */ u8          colorCount;
     /* 06 */ u8          colorStart;
 };
 
-struct GameCtrlProc {
+struct GameCtrlProc
+{
     PROC_HEADER;
 };
 
-struct BMapMainProc {
+struct BMapMainProc
+{
     PROC_HEADER;
 
     /* 29 */ u8 pad29[0x54 - 0x29];
