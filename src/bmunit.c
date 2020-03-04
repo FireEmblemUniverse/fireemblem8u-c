@@ -1538,7 +1538,7 @@ u16 CountAvailableBlueUnits(void) {
     return result;
 }
 
-int CountRedUnits(void) {
+u16 CountRedUnits(void) {
     int i;
 
     u16 result = 0;
@@ -1558,7 +1558,7 @@ int CountRedUnits(void) {
     return result;
 }
 
-int CountGreenUnits(void) {
+u16 CountGreenUnits(void) {
     int i;
 
     u16 result = 0;

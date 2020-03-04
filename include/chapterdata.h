@@ -22,9 +22,9 @@ struct ROMChapterData {
     /* 13 */ u8 battleTileSet;
 
     // This may need a type change.
-    /* 14 */ u16 easyModeLevelMalus      : 4;
-    /* 14 */ u16 normalModeLevelMalus    : 4;
-    /* 14 */ u16 difficultModeLevelBonus : 4;
+    /* 14 */ u8 easyModeLevelMalus      : 4;
+    /* 14 */ u8 difficultModeLevelBonus : 4;
+    /* 14 */ u8 normalModeLevelMalus    : 4;
 
     // 0 for blue phase, 1 for red phase, 2 for green phase, 3-5 unknown/maybe unused
     // 6 for blue/green alt, 7 for red alt

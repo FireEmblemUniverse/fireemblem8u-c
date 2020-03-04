@@ -1,8 +1,11 @@
 #ifndef GUARD_EVENT_H
 #define GUARD_EVENT_H
 
-struct EventEngineProc {
-    PROC_HEADER;
+struct UnitDefinition;
+
+struct EventEngineProc
+{
+    /* 00 */ PROC_HEADER;
 
     /* 2C */ void (*pCallback)(struct EventEngineProc*);
 
@@ -22,10 +25,13 @@ struct EventEngineProc {
 
     /* 46 */ // pad
 
-    /* 48 */ const void* pUnitLoadData;
+    /* 48 */ const struct UnitDefinition* pUnitLoadData;
     /* 4C */ u16 unitLoadCount;
     
     /* 4E */ u8  idk4E;
+
+    /* 4F */ u8 unitLoadParameter : 7;
+    /* 4F */ u8 unk4F_7 : 1;
 };
 
 enum EventExecType {
@@ -56,6 +62,25 @@ enum EventStateFlags {
 
     // I don't think there's more, but I could be wrong
 };
+
+enum EventCommandReturnCode {
+    EVC_ADVANCE_CONTINUE = 0,
+    EVC_STOP_CONTINUE    = 1,
+
+    EVC_ADVANCE_YIELD    = 2,
+    EVC_STOP_YIELD       = 3,
+    
+    EVC_UNK4             = 4,
+    EVC_END              = 5,
+    EVC_ERROR            = 6
+};
+
+#define EVENT_SLOT_COUNT 0xE
+
+extern unsigned gEventSlots[EVENT_SLOT_COUNT]; // event slot values (Null (0), Vars (1-A) + Position (B) + Check (C) + QP (D))
+extern unsigned gEventSlotQueue[]; // event slot queue (just an array)
+
+extern unsigned gEventSlotCounter;
 
 // This will probably be used in evtcmd_gmap/evtscr for defining the event code handler arrays or something
 typedef u8(*EventFuncType)(struct EventEngineProc*);
@@ -91,9 +116,11 @@ void CallGameOverEvent(void);
 // ??? GetEventTriggerState(???);
 // ??? sub_800D4D4(???);
 // ??? sub_800D524(???);
-// ??? SlotQueuePush(???);
-// ??? SlotQueuePop(???);
+void     SlotQueuePush(unsigned value);
+unsigned SlotQueuePop(void);
 // ??? SetEventSlotCounter(???);
 // ??? GetEventSlotCounter(???);
+
+#define EVENT_IS_SKIPPING(aEventEngineProc) (((aEventEngineProc)->evStateBits >> 2) & 1)
 
 #endif // GUARD_EVENT_H

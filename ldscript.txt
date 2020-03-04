@@ -50,6 +50,7 @@ SECTIONS
         asm/spline.o(.text);
         asm/evtcmd_gmap.o(.text);
         src/event.o(.text);
+        src/evtscr.o(.text);
         asm/evtscr.o(.text);
         asm/popup.o(.text);
         asm/evtsub.o(.text);
@@ -196,7 +197,8 @@ SECTIONS
         . = ALIGN(4); data/face_rodata.o(.rodata);
         . = ALIGN(4); data/scene_rodata.o(.rodata);
         . = ALIGN(4); src/messdecode.o(.rodata);
-        . = ALIGN(4); data/const_data_D792C.o(.rodata);
+        . = ALIGN(4); data/evtcmd_gmap_rodata.o(.rodata);
+        . = ALIGN(4); src/evtscr.o(.rodata); data/const_data_D793F.o(.rodata);
         . = ALIGN(4); src/bmitem.o(.rodata);
         . = ALIGN(4); src/bmunit.o(.rodata);
         . = ALIGN(4); data/const_data_D7A6C.o(.rodata);

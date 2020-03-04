@@ -19,21 +19,14 @@ static void  EventEngine_StartSkip(struct EventEngineProc*);
 static void  sub_800D488(struct EventEngineProc*);
 static void  CallNextQueuedEvent(void); // local
 
-#define EVENT_SLOT_COUNT 0xE
-
 struct EnqueuedEventCall {
-    const u16* events;
-    u8 execType;
-    s8 isUsed;
+    /* 00 */ const u16* events;
+    /* 04 */ u8 execType;
+    /* 05 */ s8 isUsed;
 };
 
-extern unsigned gEventSlots[EVENT_SLOT_COUNT]; // event slot values (Null (0), Vars (1-A) + Position (B) + Check (C) + QP (D))
-extern unsigned gEventSlotQueue[]; // event slot queue (just an array)
-
-extern unsigned gEventSlotCounter;
-
 // TODO: better
-extern struct EnqueuedEventCall gEventCallQueue[]; // gEventCallQueue
+extern struct EnqueuedEventCall gEventCallQueue[];
 
 extern struct ProcCmd gUnknown_030005B0[4];
 
@@ -190,19 +183,19 @@ void EventEngine_OnUpdate(struct EventEngineProc* proc) {
         evFunc = (evCode < 0x80) ? gEventLoCmdTable[evCode] : gEventHiCmdTable[evCode - 0x80];
 
         switch (evFunc(proc)) {
-        case 0:
+        case EVC_ADVANCE_CONTINUE:
             proc->pEventCurrent += ((*proc->pEventCurrent) >> 4)&0xF;
-        case 1:
-        case 4:
-        case 6:
+        case EVC_STOP_CONTINUE:
+        case EVC_UNK4:
+        case EVC_ERROR:
             break;
         
-        case 2:
+        case EVC_ADVANCE_YIELD:
             proc->pEventCurrent += ((*proc->pEventCurrent) >> 4)&0xF;
-        case 3:
+        case EVC_STOP_YIELD:
             return;
         
-        case 5:
+        case EVC_END:
             Proc_ClearNativeCallback((struct Proc*)(proc));
             return;
         }
